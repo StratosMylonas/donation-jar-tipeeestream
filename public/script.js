@@ -12,7 +12,7 @@ socket.on('donation-update', (data) => {
 function updateJar(amount, goal, isNewDonation = false) {
     const liquid = document.getElementById('donation-liquid');
     const donationText = document.getElementById('donation-text');
-    const jarHeight = 250;
+    const jarHeight = 215;
 
     let percentage = Math.min(amount / goal, 1) * 100;
     let liquidHeight = (amount / goal) * jarHeight;
@@ -21,7 +21,7 @@ function updateJar(amount, goal, isNewDonation = false) {
     liquid.style.height = `${liquidHeight}px`;
 
     // Update text
-    donationText.innerText = `${amount.toFixed(2)} / ${Math.floor(goal)} (${percentage.toFixed(0)}%)`;
+    donationText.innerText = `${amount.toFixed(2)} / ${Math.floor(goal)}€ (${percentage.toFixed(0)}%)`;
 
     // Apply animation when new donation comes in
     if (isNewDonation) {
@@ -31,12 +31,7 @@ function updateJar(amount, goal, isNewDonation = false) {
 
     // Update colors dynamically (same logic as before)
     const colors = [
-        { percent: 0, color: [216, 71, 89] },   // Red
-        { percent: 20, color: [227, 93, 93] },  // Dark Orange
-        { percent: 40, color: [248, 166, 60] }, // Orange-Yellow
-        { percent: 60, color: [159, 218, 46] }, // Green-Yellow
-        { percent: 85, color: [75, 201, 54] },  // Slight Green
-        { percent: 95, color: [0, 255, 153] },  // Neon Green starts here
+        { percent: 0, color: [255, 0, 255] },
         { percent: 100, color: [0, 255, 0] }    // Fully Green
     ];
 
