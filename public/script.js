@@ -1,4 +1,19 @@
-const socket = io();
+const socket = io({
+    timeout: 2000 // Wait up to 2 seconds before considering it failed
+});
+
+// Detect connection failure
+let connected = false;
+
+socket.on('connect', () => {
+    connected = true;
+});
+
+setTimeout(() => {
+    if (!connected) {
+        document.getElementById('server-status').style.display = 'block';
+    }
+}, 2500);
 
 socket.on('donation-goal', (data) => {
     document.getElementById('donation-goal-title').innerText = data.title || 'Donation Goal';
@@ -17,43 +32,20 @@ function updateJar(amount, goal, isNewDonation = false) {
     let percentage = Math.min(amount / goal, 1) * 100;
     let liquidHeight = (amount / goal) * jarHeight;
 
-    // Update liquid height
     liquid.style.height = `${liquidHeight}px`;
-
-    // Update text
     donationText.innerText = `${amount.toFixed(2)} / ${Math.floor(goal)}€ (${percentage.toFixed(0)}%)`;
 
-    // Apply animation when new donation comes in
     if (isNewDonation) {
         liquid.classList.add('new-donation');
         setTimeout(() => liquid.classList.remove('new-donation'), 1000);
     }
 
-    // Update colors dynamically (same logic as before)
-    const colors = [
-        { percent: 0, color: [255, 0, 255] },
-        { percent: 100, color: [0, 255, 0] }    // Fully Green
-    ];
-
-    let startColor, endColor;
-    for (let i = 0; i < colors.length - 1; i++) {
-        if (percentage >= colors[i].percent && percentage <= colors[i + 1].percent) {
-            startColor = colors[i];
-            endColor = colors[i + 1];
-            break;
-        }
-    }
-
-    if (startColor && endColor) {
-        let ratio = (percentage - startColor.percent) / (endColor.percent - startColor.percent);
-        let r = Math.round(startColor.color[0] + ratio * (endColor.color[0] - startColor.color[0]));
-        let g = Math.round(startColor.color[1] + ratio * (endColor.color[1] - startColor.color[1]));
-        let b = Math.round(startColor.color[2] + ratio * (endColor.color[2] - startColor.color[2]));
-
-        let neonColor = `rgb(${r}, ${g}, ${b})`;
-        let glowColor = `rgba(${r}, ${g}, ${b}, 0.8)`;
-
-        liquid.style.background = `linear-gradient(135deg, ${neonColor} 10%, ${neonColor} 50%, white 90%)`;
-        liquid.style.boxShadow = `0 0 30px ${glowColor}, 0 0 50px ${glowColor}`;
+    // Color logic simplified:
+    if (percentage < 100) {
+        liquid.style.background = `linear-gradient(135deg, rgb(255, 0, 255) 10%, rgb(255, 0, 255) 50%, white 90%)`;
+        liquid.style.boxShadow = `0 0 30px rgba(255, 0, 255, 0.8), 0 0 50px rgba(255, 0, 255, 0.8)`;
+    } else {
+        liquid.style.background = `linear-gradient(135deg, rgb(0, 255, 0) 10%, rgb(0, 255, 0) 50%, white 90%)`;
+        liquid.style.boxShadow = `0 0 30px rgba(0, 255, 0, 0.8), 0 0 50px rgba(0, 255, 0, 0.8)`;
     }
 }
