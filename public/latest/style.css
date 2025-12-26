@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  margin: 0;
+  background: transparent;
+  overflow: hidden;
+  font-family: 'Press Start 2P', monospace;
+  image-rendering: pixelated;
+}
+
+/* Widget Container */
+.latest-widget {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 320px;
+  max-width: 400px;
+  height: auto;
+  background: rgba(0,0,0,0.85);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  cursor: default;
+  animation: neonPulse 2.5s ease-in-out infinite alternate, fadeIn 0.45s ease-out;
+  z-index: 10;
+}
+
+/* Gradient Border */
+.latest-widget::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  padding: 2px;
+  background: linear-gradient(90deg, #ff69b4, #ff69b4aa, #8a2be2);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Neon Glow */
+.latest-widget::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: 10px;
+  box-shadow:
+    0 0 4px #ff69b4,
+    0 0 8px #ff69b4aa,
+    0 0 12px #8a2be2aa;
+  filter: blur(0.4px);
+  z-index: -2;
+}
+
+/* Scanlines Overlay */
+.latest-widget .scanlines {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.02) 0px,
+    rgba(255,255,255,0.02) 1px,
+    transparent 2px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+/* Label (Top text) */
+.latest-widget .label {
+  font-size: 9px;
+  color: #ffffffcc;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+/* Name / Amount (no scrolling, clipped with ellipsis) */
+.latest-widget .name {
+  font-size: 13px;
+  color: #ff69b4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 4px #ff69b4, 0 0 8px #ff69b4aa;
+  display: inline-block;
+  padding-right: 0;
+  box-sizing: content-box;
+}
+
+/* Glow animation on update */
+.glow {
+  animation: glowPulse 0.9s ease-out;
+}
+
+/* Animations */
+@keyframes neonPulse {
+  0%   { box-shadow: 0 0 4px #ff69b4, 0 0 8px #ff69b4aa; }
+  50%  { box-shadow: 0 0 6px #ff69b4, 0 0 12px #ff69b4cc; }
+  100% { box-shadow: 0 0 4px #ff69b4, 0 0 8px #ff69b4aa; }
+}
+
+@keyframes glowPulse {
+  0%   { box-shadow: 0 0 20px #ff69b4, 0 0 40px #ff69b4; }
+  100% { box-shadow: 0 0 10px rgba(255,105,180,0.4); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
