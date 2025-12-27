@@ -3,30 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donation Jar</title>
+    <title>Donation Bar</title>
     <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <noscript>
-    <div style="color: red; font-size: 18px; text-align: center;">
-        JavaScript is disabled or the server is not running. Please make sure the server is running.
-    </div>
+        <div style="color: red; font-size: 18px; text-align: center;">
+            JavaScript is disabled or the server is not running.
+        </div>
     </noscript>
-    <div id="server-status" style="color: red; text-align: center; display: none;">
-    ⚠️ Could not connect to the donation server. Is it running?
-    </div>
+
+    <div id="server-status" style="display:none;">⚠️ Could not connect to the donation server.</div>
 
     <div id="donation-goal-title">Donation Goal</div>
-    
-    <div class="jar-container">
-        <img src="jar.png" class="jar-image" alt="Donation Jar">
-        <div class="liquid" id="donation-liquid"></div>
+
+    <div class="donation-bar-container">
+        <div class="donation-bar" id="donation-bar"></div>
+        <div class="bar-title" id="bar-title">Donation Goal</div>
+        <div class="bar-amount" id="bar-amount">0 / 0€ (0%)</div>
     </div>
 
-    <div id="donation-text">0 / 0 €(0%)</div>
-
-    <script src="./script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>

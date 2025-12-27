@@ -124,9 +124,9 @@ connectTipeeeStream();
 io.on("connection", (socket) => {
     console.log("🟢 Client connected");
 
-    // Send donation goal
+    // Send donation goal with title from data.json
     socket.emit("donation-goal", {
-        title: process.env.GOAL_TITLE || "Donation Goal",
+        title: data.title || "Donation Goal",
         currentDonations: data.totalDonations,
         goal: data.donationGoal
     });
