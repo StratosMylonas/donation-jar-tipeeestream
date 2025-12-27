@@ -24,12 +24,10 @@ function updateBar(amount, goal, title = "Donation Goal") {
     const bar = document.getElementById("donation-bar");
     const barAmount = document.getElementById("bar-amount");
     const barTitle = document.getElementById("bar-title");
-    const goalTitle = document.getElementById("donation-goal-title");
 
     const percentage = Math.min(amount / goal, 1) * 100;
 
     bar.style.width = `${percentage}%`;
     barTitle.innerText = title;
-    goalTitle.innerText = title;
     barAmount.innerText = `${amount.toFixed(2)} / ${Math.floor(goal)}€ (${percentage.toFixed(0)}%)`;
 }
